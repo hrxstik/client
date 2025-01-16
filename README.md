@@ -1,3 +1,3 @@
 # Yaring hotel app
 
-Stack: TS, React router, Redux toolkit, axios, tailwind, bootstrap
+Stack: TS, React router, Redux toolkit, axios, tailwind

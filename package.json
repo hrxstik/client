@@ -3,14 +3,27 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@pbe/react-yandex-maps": "^1.2.5",
+    "@reduxjs/toolkit": "^2.5.0",
     "@types/react": "^19.0.7",
+    "@types/react-bootstrap": "^0.32.37",
     "@types/react-dom": "^19.0.3",
+    "@types/yandex-maps": "^2.1.36",
+    "@yandex/ymaps3-types": "^1.0.15542062",
+    "autoprefixer": "^10.4.20",
+    "axios": "^1.7.9",
+    "bootstrap": "^5.3.3",
     "cra-template": "1.2.0",
+    "postcss": "^8.5.1",
     "react": "^19.0.0",
+    "react-bootstrap": "^2.10.7",
     "react-dom": "^19.0.0",
     "react-redux": "^9.2.0",
+    "react-router": "^7.1.1",
+    "react-router-dom": "^7.1.1",
     "react-scripts": "5.0.1",
-    "redux": "^5.0.1"
+    "redux": "^5.0.1",
+    "tailwindcss": "^3.4.17"
   },
   "scripts": {
     "start": "react-scripts start",

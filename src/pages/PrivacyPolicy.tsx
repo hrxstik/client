@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Admin: React.FC = () => {
+const PrivacyPolicy: React.FC = () => {
   return (
-    <div>
+    <div className="page">
       <h1>ПОЛИТИКА ОБРАБОТКИ ПЕРСОНАЛЬНЫХ ДАННЫХ</h1>
       <div>
         <h2>1. Общие положения</h2>
@@ -121,4 +121,4 @@ const Admin: React.FC = () => {
   );
 };
 
-export default Admin;
+export default PrivacyPolicy;

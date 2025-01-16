@@ -1,7 +1,12 @@
 import React from 'react';
+import ImageSlider from '../components/ImageSlider/ImageSlider';
 
-const Admin: React.FC = () => {
-  return <div></div>;
+const Home: React.FC = () => {
+  return (
+    <div className="page">
+      <ImageSlider />
+    </div>
+  );
 };
 
-export default Admin;
+export default Home;

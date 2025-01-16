@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Admin: React.FC = () => {
+const NotFound: React.FC = () => {
   return <div></div>;
 };
 
-export default Admin;
+export default NotFound;
