@@ -3,7 +3,7 @@ import Navigation from './Navigation/Navigation';
 
 const Header = () => {
   return (
-    <div className="p-4">
+    <div className="py-4">
       <div className="page">
         <Navigation />
       </div>

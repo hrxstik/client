@@ -15,6 +15,19 @@
   li {
     @apply list-disc;
   }
+  p {
+    @apply text-xs; /* По умолчанию для всех экранов */
+
+    @apply sm:text-sm;
+
+    @apply md:text-base;
+
+    @apply lg:text-lg;
+
+    @apply xl:text-xl;
+
+    @apply 2xl:text-2xl;
+  }
 }
 
 @layer utilities {
@@ -25,7 +38,7 @@
     @apply flex flex-col gap-8 py-2;
   }
   .white-button {
-    @apply py-1 px-4 select-none rounded-full bg-white text-yaring-blue border-yaring-blue border block max-w-fit md:py-2 md:px-8 text-sm md:text-base lg:text-lg;
+    @apply text-center py-1 px-2 sm:py-1 sm:px-4 select-none rounded-full bg-white text-yaring-blue border-yaring-blue border block max-w-fit md:py-2 md:px-4 text-sm md:text-base lg:text-lg;
   }
   .round-white-button {
     @apply select-none rounded-full bg-white text-yaring-blue border-yaring-blue border block max-w-fit p-2;

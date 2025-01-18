@@ -19,7 +19,7 @@ export const Questions: React.FC<Props> = ({ className }) => {
 
   return (
     <div className={className}>
-      <div ref={refs.questions} className="py-6" id="questions">
+      <div ref={refs.questions} className="py-6 pt-4" id="questions">
         <h2 className="max-w-fit">Частые вопросы</h2>
       </div>
       {questions.map((question, index) => (

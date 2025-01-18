@@ -13,7 +13,7 @@ const Pricing: React.FC = () => {
 
   return (
     <div className="pricing page">
-      <div className="grid grid-cols-2 grid-rows-1">
+      <div className="grid grid-cols-1 grid-rows-1 md:grid-cols-2">
         <div className="relative w-full h-0 pb-[100%]">
           <img src="" alt="" className="absolute top-0 left-0 w-full h-full object-cover" />
         </div>
@@ -56,7 +56,8 @@ const Pricing: React.FC = () => {
         bedroomProps={['Двухспальное место с комфортным матрасом']}
         additionalProps={['Бесплатный Wi-Fi', 'Теплый пол', 'Кондиционер']}
       />
-      <div className="grid grid-cols-2 grid-rows-1">
+      <hr />
+      <div className="grid grid-cols-1 grid-rows-1 md:grid-cols-2">
         <div className="relative w-full h-0 pb-[100%]">
           <img src="" alt="" className="absolute top-0 left-0 w-full h-full object-cover" />
         </div>
@@ -97,6 +98,7 @@ const Pricing: React.FC = () => {
         bedroomProps={['Двухспальное место с комфортным матрасом']}
         additionalProps={['Бесплатный Wi-Fi', 'Теплый пол', 'Кондиционер']}
       />
+      <hr />
       <div className="grid grid-cols-2 grid-rows-1">
         <div className="relative w-full h-0 pb-[100%]">
           <img src="" alt="" className="absolute top-0 left-0 w-full h-full object-cover" />
