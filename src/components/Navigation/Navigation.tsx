@@ -2,6 +2,8 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Logo from '../Logo';
 import { ScrollElement, useScroll } from './ScrollContext';
+import SocialLinks from '../SocialLinks';
+import Telephone from '../buttons/TelephoneButton';
 // import SocialLinks from '../SocialLinks';
 // import Telephone from '../buttons/Telephone';
 
@@ -22,7 +24,7 @@ const Navigation = () => {
   }, [location]);
 
   return (
-    <div className="flex gap-8 items-center justify-center">
+    <div className="flex flex-wrap gap-8 items-center justify-center">
       <Logo />
       <Link to="/#about">
         <span className="cursor-pointer">О нас</span>
@@ -34,10 +36,10 @@ const Navigation = () => {
       <Link to="/#activities">Активности</Link>
       <Link to="/#questions">Частые вопросы</Link>
       <Link to="contact">Контакты</Link>
-      {/* <div className="flex items-center gap-4 ml-8">
+      <div className="flex items-center gap-4 ml-8">
         <SocialLinks />
         <Telephone />
-      </div> */}
+      </div>
     </div>
   );
 };

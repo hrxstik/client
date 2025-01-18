@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const HomeButton = () => {
   return (
-    <Link to="/" className="white-button">
+    <Link to="/" className="ml-auto white-button">
       <span>На главную</span>
     </Link>
   );

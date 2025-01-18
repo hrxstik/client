@@ -16,13 +16,13 @@
 
 @layer utilities {
   .wrapper {
-    @apply flex flex-col min-h-full max-w-screen-2xl m-auto;
+    @apply px-16 flex flex-col min-h-full max-w-screen-xl mx-auto;
   }
   .page {
-    @apply py-4 px-32 flex flex-col gap-8;
+    @apply flex flex-col gap-8 py-2;
   }
   .white-button {
-    @apply select-none rounded-full bg-white text-yaring-blue border-yaring-blue border block max-w-fit py-2 px-8 m-2 ml-auto;
+    @apply select-none rounded-full bg-white text-yaring-blue border-yaring-blue border block max-w-fit py-2 px-8;
   }
   .orange-button {
     @apply select-none rounded-full bg-yaring-orange text-white block max-w-fit py-2 px-8;

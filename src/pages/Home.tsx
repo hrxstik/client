@@ -1,10 +1,14 @@
 import React from 'react';
-import ImageSlider from '../components/ImageSlider/ImageSlider';
+import Greeting from '../components/Greeting';
+import About from '../components/About';
+import HouseInfo from '../components/HouseInfo';
 
 const Home: React.FC = () => {
   return (
     <div className="page">
-      <ImageSlider />
+      <Greeting />
+      <About />
+      <HouseInfo />
     </div>
   );
 };

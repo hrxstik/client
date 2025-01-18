@@ -4,7 +4,7 @@ const Telephone = () => {
   const phoneNumber = '+7 (977) 576-76-09';
 
   return (
-    <a href={`tel:${phoneNumber.replace(/([\s+()-])/g, '')}`} className="orange-button">
+    <a href={`tel:${phoneNumber.replace(/([\s+()-])/g, '')}`} className="white-button">
       {phoneNumber}
     </a>
   );

@@ -6,6 +6,7 @@ const Footer = () => {
   return (
     <div className="footer">
       <div className="page">
+        <hr />
         <Navigation />
         <div className="underline text-sm">
           <div>

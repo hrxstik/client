@@ -1,3 +1,5 @@
+import React from 'react';
+
 export enum ESocialLinks {
   VK = 'https://vk.com/clubyaring2024',
   Instagram = '',
@@ -10,7 +12,7 @@ const SocialLinks = () => {
         <a target="_blank" rel="noopener noreferrer" href={ESocialLinks.VK}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            fill="#fff"
+            fill="#0d2e37"
             x="0px"
             y="0px"
             width="32"

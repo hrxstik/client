@@ -3,10 +3,11 @@ import Navigation from './Navigation/Navigation';
 
 const Header = () => {
   return (
-    <div className="header">
+    <div className="p-4">
       <div className="page">
         <Navigation />
       </div>
+      <hr />
     </div>
   );
 };
