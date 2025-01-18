@@ -12,6 +12,9 @@
   h2 {
     @apply text-2xl font-bold;
   }
+  li {
+    @apply list-disc;
+  }
 }
 
 @layer utilities {
@@ -22,9 +25,15 @@
     @apply flex flex-col gap-8 py-2;
   }
   .white-button {
-    @apply select-none rounded-full bg-white text-yaring-blue border-yaring-blue border block max-w-fit py-2 px-8;
+    @apply py-1 px-4 select-none rounded-full bg-white text-yaring-blue border-yaring-blue border block max-w-fit md:py-2 md:px-8 text-sm md:text-base lg:text-lg;
+  }
+  .round-white-button {
+    @apply select-none rounded-full bg-white text-yaring-blue border-yaring-blue border block max-w-fit p-2;
   }
   .orange-button {
     @apply select-none rounded-full bg-yaring-orange text-white block max-w-fit py-2 px-8;
+  }
+  .card {
+    @apply bg-white text-yaring-blue rounded-2xl p-4 drop-shadow pl-8;
   }
 }

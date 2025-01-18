@@ -24,7 +24,7 @@ const Navigation = () => {
   }, [location]);
 
   return (
-    <div className="flex flex-wrap gap-8 items-center justify-center">
+    <div className="text-sm md:text-base flex flex-wrap gap-8 items-center justify-center">
       <Logo />
       <Link to="/#about">
         <span className="cursor-pointer">О нас</span>
@@ -36,7 +36,7 @@ const Navigation = () => {
       <Link to="/#activities">Активности</Link>
       <Link to="/#questions">Частые вопросы</Link>
       <Link to="contact">Контакты</Link>
-      <div className="flex items-center gap-4 ml-8">
+      <div className="flex items-center gap-4">
         <SocialLinks />
         <Telephone />
       </div>

@@ -10,9 +10,9 @@ interface Props {
 export const About: React.FC<Props> = () => {
   const { refs } = useScroll();
   return (
-    <div ref={refs.about} className="grid grid-cols-2" id="about">
+    <div ref={refs.about} className="grid text-sm md:text-base md:grid-cols-2" id="about">
       <ImageSlider />
-      <section className="px-4">
+      <section className="pl-0 pt-4 md:pl-4">
         <h2 className="text-3xl font-bold mb-4">О нас</h2>
         <p className="mb-4">
           База отдыха, расположенная в живописном месте рядом с лесом и озером, предлагает идеальные

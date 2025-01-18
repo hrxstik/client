@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../redux/store';
 import { fetchSliderImages } from '../redux/slices/imageSlice';
-import { ReactComponent as ArrowBack } from '../assets/arrow_back_ios_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg';
-import { ReactComponent as ArrowForward } from '../assets/arrow_forward_ios_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg';
 
 const ImageSlider: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -41,7 +39,7 @@ const ImageSlider: React.FC = () => {
       <div className="relative w-full h-0 pb-[100%]">
         <img
           src={images[currentIndex]}
-          alt={`Image ${currentIndex + 1}`}
+          alt={`Что то пошло не так😥`}
           className="absolute top-0 left-0 w-full h-full object-cover"
         />
         <div className="absolute gap-2 bottom-4 flex justify-center w-full">
@@ -59,8 +57,15 @@ const ImageSlider: React.FC = () => {
       {images.length ? (
         <button
           onClick={prevImage}
-          className="absolute w-10 h-10 left-2 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-2 pl-3.5 shadow bg-opacity-50">
-          <ArrowBack className="w-5 h-5" />
+          className="absolute w-10 h-10 left-2 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-2 pl-3.5 shadow bg-opacity-40">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="20px"
+            viewBox="0 -960 960 960"
+            width="20px"
+            fill="#5f6368">
+            <path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z" />
+          </svg>
         </button>
       ) : (
         ''
@@ -69,8 +74,15 @@ const ImageSlider: React.FC = () => {
       {images.length ? (
         <button
           onClick={nextImage}
-          className="absolute w-10 h-10 right-2 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-2 pl-2.5 shadow bg-opacity-50">
-          <ArrowForward className="w-5 h-5" />
+          className="absolute w-10 h-10 right-2 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-2 pl-2.5 shadow bg-opacity-40">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="20px"
+            viewBox="0 -960 960 960"
+            width="20px"
+            fill="#5f6368">
+            <path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z" />
+          </svg>
         </button>
       ) : (
         ''

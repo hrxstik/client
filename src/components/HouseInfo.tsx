@@ -7,9 +7,9 @@ const HouseInfo = () => {
   return (
     <div
       ref={refs.houseInfo}
-      className="bg-house bg-cover bg-centers aspect-[5/1] p-4 grid grid-cols-2"
+      className="bg-house bg-cover bg-centers aspect-[5/1] grid grid-cols-2"
       id="houseInfo">
-      <section className="py-8 px-8">
+      <section className="">
         <h2 className="text-3xl font-bold mb-4">Домики</h2>
         <p className="mb-6">
           Ваш идеальный уголок уединения и комфорта на природе. Погрузитесь в атмосферу уюта и стиля
@@ -21,7 +21,7 @@ const HouseInfo = () => {
           <Button className="white-button" text="Подробнее о домиках" linkTo="/pricing" />
         </div>
       </section>
-      <section className="py-8 px-16 text-xl">
+      <section className="pl-16 text-l">
         <ul className="list-disc list-inside mb-6 flex flex-col gap-4">
           <li>Современный ремонт</li>
           <li>Полностью оборудованная кухня</li>

@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import YandexMap from '../components/YandexMap';
 import HomeButton from '../components/buttons/HomeButton';
 import { ESocialLinks } from '../components/SocialLinks';
 import Telephone from '../components/buttons/TelephoneButton';
+import { useLocation } from 'react-router';
 
 const Contact: React.FC = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
   return (
     <div className="page">
       <HomeButton />
