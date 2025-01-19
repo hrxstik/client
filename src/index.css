@@ -32,7 +32,7 @@
 
 @layer utilities {
   .wrapper {
-    @apply px-16 flex flex-col min-h-full max-w-screen-xl mx-auto;
+    @apply px-4 sm:px-16 flex flex-col min-h-full max-w-screen-xl mx-auto;
   }
   .page {
     @apply flex flex-col gap-8 py-2;

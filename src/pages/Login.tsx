@@ -1,10 +1,22 @@
 import React from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Login: React.FC = () => {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [error, setError] = React.useState('');
+
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      navigate('/admin');
+      return;
+    }
+  }, [navigate]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -17,7 +29,7 @@ const Login: React.FC = () => {
 
       localStorage.setItem('token', response.data.token);
 
-      window.location.href = '/admin';
+      navigate('/admin');
     } catch (err) {
       setError('Неверное имя пользователя или пароль');
     }

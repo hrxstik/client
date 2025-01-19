@@ -14,9 +14,6 @@ import Login from './pages/Login';
 import Admin from './pages/Admin';
 import Booking from './pages/Booking';
 
-// import { AuthProvider } from './AuthContext';
-// import { AuthContext } from './AuthContext';
-
 function App() {
   return (
     <div className="App">
@@ -29,14 +26,7 @@ function App() {
           <Route path="living-rules" element={<LivingRules />} />
           <Route path="privacy-policy" element={<PrivacyPolicy />} />
           <Route path="login" element={<Login />} />
-          <Route
-            path="/admin"
-            element={
-              // <RequireAuth>
-              <Admin />
-              // </RequireAuth>
-            }
-          />
+          <Route path="/admin" element={<Admin />} />
           <Route path="booking" element={<Booking />} />
         </Route>
       </Routes>
