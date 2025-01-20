@@ -40,7 +40,7 @@ const ImageSlider: React.FC = () => {
         <img
           src={images[currentIndex]}
           alt={`Что то пошло не так😥`}
-          className="absolute top-0 left-0 w-full h-full object-cover"
+          className="absolute top-0 left-0 w-full h-full object-cover rounded-md"
         />
         <div className="absolute gap-2 bottom-4 flex justify-center w-full">
           {images.map((_, index) => (

@@ -15,7 +15,11 @@ const Pricing: React.FC = () => {
     <div className="pricing page">
       <div className="grid grid-cols-1 grid-rows-1 md:grid-cols-2">
         <div className="relative w-full h-0 pb-[100%]">
-          <img src="" alt="" className="absolute top-0 left-0 w-full h-full object-cover" />
+          <img
+            src=""
+            alt=""
+            className="absolute top-0 left-0 w-full h-full object-cover rounded-md"
+          />
         </div>
         <PricingInfo
           header="Треугольный домик 45 кв.м"
@@ -59,7 +63,11 @@ const Pricing: React.FC = () => {
       <hr />
       <div className="grid grid-cols-1 grid-rows-1 md:grid-cols-2">
         <div className="relative w-full h-0 pb-[100%]">
-          <img src="" alt="" className="absolute top-0 left-0 w-full h-full object-cover" />
+          <img
+            src=""
+            alt=""
+            className="absolute top-0 left-0 w-full h-full object-cover rounded-md"
+          />
         </div>
         <PricingInfo
           header="Барн дом 36 кв.м"
@@ -101,7 +109,11 @@ const Pricing: React.FC = () => {
       <hr />
       <div className="grid grid-cols-2 grid-rows-1">
         <div className="relative w-full h-0 pb-[100%]">
-          <img src="" alt="" className="absolute top-0 left-0 w-full h-full object-cover" />
+          <img
+            src=""
+            alt=""
+            className="absolute top-0 left-0 w-full h-full object-cover rounded-md"
+          />
         </div>
         <PricingInfo
           header="Баня"
