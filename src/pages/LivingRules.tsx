@@ -1,5 +1,5 @@
 import React from 'react';
-import HomeButton from '../components/buttons/HomeButton';
+import HomeButton from '../components/Buttons/HomeButton';
 
 const LivingRules: React.FC = () => {
   return (

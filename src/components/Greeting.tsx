@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from './buttons/Button';
+import Button from './Buttons/Button';
 import { useLocation } from 'react-router';
 
 const Greeting = () => {

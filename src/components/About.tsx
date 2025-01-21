@@ -1,7 +1,7 @@
 import React from 'react';
 import { useScroll } from './Navigation/ScrollContext';
 import ImageSlider from './ImageSlider';
-import Button from './buttons/Button';
+import Button from './Buttons/Button';
 
 interface Props {
   className?: string;

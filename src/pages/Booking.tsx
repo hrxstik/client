@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router';
-import Calendar from 'react-calendar';
 
 const Booking: React.FC = () => {
   const location = useLocation();

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import YandexMap from '../components/YandexMap';
-import HomeButton from '../components/buttons/HomeButton';
+import HomeButton from '../components/Buttons/HomeButton';
 import { ESocialLinks } from '../components/SocialLinks';
-import Telephone from '../components/buttons/TelephoneButton';
+import Telephone from '../components/Buttons/TelephoneButton';
 import { useLocation } from 'react-router';
 
 const Contact: React.FC = () => {
