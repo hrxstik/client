@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useLocation } from 'react-router';
+import Calendar from 'react-calendar';
 
 const Booking: React.FC = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
+
   const [propertyType, setPropertyType] = useState('');
   const [triangularHouses, setTriangularHouses] = useState([1, 2, 3, 4, 5]);
   const [barnHouses, setBarnHouses] = useState([1, 2]);
@@ -13,6 +21,33 @@ const Booking: React.FC = () => {
     startTime?: string;
     endTime?: string;
   } | null>(null);
+
+  const [occupiedDates, setOccupiedDates] = useState<Date[]>([]);
+
+  useEffect(() => {
+    if (propertyType === 'sauna') {
+      setDates((prev) => {
+        if (!prev) {
+          return {
+            start: '',
+            end: '',
+            startTime: '00:00',
+            endTime: '01:00',
+          };
+        }
+        return prev;
+      });
+    }
+  }, [propertyType]);
+
+  const minDate = new Date();
+  minDate.setDate(minDate.getDate() + 1);
+  const minDateStr = minDate.toISOString().split('T')[0];
+
+  const maxDate = new Date();
+  maxDate.setDate(maxDate.getDate() + 30);
+  const maxDateStr = maxDate.toISOString().split('T')[0];
+
   const [dateError, setDateError] = useState('');
   const [timeError, setTimeError] = useState('');
 
@@ -62,6 +97,16 @@ const Booking: React.FC = () => {
         const startDate = new Date(updatedDates.start);
         const endDate = new Date(updatedDates.end);
 
+        if (startDate < minDate) {
+          setDateError('Дата въезда должна быть не раньше чем через два дня от текущей даты');
+          updatedDates.start = minDateStr;
+        }
+
+        if (endDate > maxDate) {
+          setDateError('Бронь более чем на неделю невозможна');
+          updatedDates.start = maxDateStr;
+        }
+
         if (startDate > endDate) {
           setDateError('Дата въезда не может быть позже даты выезда');
         } else {
@@ -79,27 +124,31 @@ const Booking: React.FC = () => {
     setDates((prev) => {
       const updatedDates = { ...prev!, [name]: value };
 
-      if (updatedDates.start && updatedDates.end) {
-        const startDate = new Date(updatedDates.start);
-        const endDate = new Date(updatedDates.end);
+      if (updatedDates.startTime && updatedDates.endTime) {
+        const startHour = parseInt(updatedDates.startTime.split(':')[0], 10);
+        const endHour = parseInt(updatedDates.endTime.split(':')[0], 10);
 
-        console.log(startDate);
-        console.log(endDate);
+        let duration = endHour - startHour;
 
-        // Проверка на одинаковые даты
-        if (startDate.getTime() === endDate.getTime()) {
-          // Проверяем наличие значений времени
-          if (updatedDates.startTime && updatedDates.endTime) {
-            const startHour = parseInt(updatedDates.startTime.split(':')[0], 10);
-            const endHour = parseInt(updatedDates.endTime.split(':')[0], 10);
+        if (duration < 0) {
+          duration += 24;
+        }
 
-            // Проверка времени
-            if (startHour >= endHour) {
-              setTimeError('Время начала бронирования должно быть меньше времени окончания');
-            } else {
-              setTimeError('');
-            }
-          }
+        if (duration < 2) {
+          setTimeError('Минимальная продолжительность бронирования — 2 часа');
+        } else if (duration > 6) {
+          setTimeError('Максимальная продолжительность бронирования — 6 часов');
+        } else {
+          setTimeError('');
+        }
+
+        if (startHour >= endHour) {
+          const startDate = new Date(updatedDates.start);
+          const endDate = new Date(startDate.getTime());
+          endDate.setDate(endDate.getDate() + 1);
+          updatedDates.end = endDate.toISOString().split('T')[0];
+        } else {
+          updatedDates.end = updatedDates.start;
         }
       }
 
@@ -132,7 +181,6 @@ const Booking: React.FC = () => {
   return (
     <div className="max-w-2xl mx-auto p-6 shadow-lg rounded-lg">
       <h1 className="text-2xl font-bold text-center mb-6">Бронирование</h1>
-
       <form onSubmit={handleSubmit}>
         <label className="block mb-4">
           <span>Выберите тип недвижимости:</span>
@@ -207,10 +255,12 @@ const Booking: React.FC = () => {
         {selectedProperty && (
           <div className="mb-4">
             <label className="block">
-              <span>Выберите даты:</span>
-              <div className="flex mt-1 space-x-2">
+              <span>Выберите дат{propertyType === 'sauna' ? 'у' : 'ы'}:</span>
+              <div className="flex-col space-y-2 sm:flex sm:flex-row sm:mt-1 sm:space-x-4">
                 <label htmlFor="start">Дата въезда</label>
                 <input
+                  min={minDateStr}
+                  max={maxDateStr}
                   type="date"
                   id="start"
                   name="start"
@@ -218,24 +268,31 @@ const Booking: React.FC = () => {
                   required
                   className="block w-full border rounded-md p-2"
                 />
-                <label htmlFor="start">Дата выезда</label>
-                <input
-                  type="date"
-                  id="end"
-                  name="end"
-                  onChange={handleDateChange}
-                  required
-                  className="block w-full border rounded-md p-2"
-                />
+                {propertyType !== 'sauna' && (
+                  <>
+                    <label htmlFor="start">Дата выезда</label>
+                    <input
+                      min={minDateStr}
+                      max={maxDateStr}
+                      type="date"
+                      id="end"
+                      name="end"
+                      onChange={handleDateChange}
+                      required
+                      className="block w-full border rounded-md p-2"
+                    />
+                  </>
+                )}
               </div>
 
-              {propertyType === 'sauna' ? (
+              {propertyType === 'sauna' && dates?.start ? (
                 <>
                   <div className="flex flex-col mt-4">
                     <label htmlFor="startTime">Забронировать с</label>
                     <select
                       id="startTime"
                       name="startTime"
+                      value={dates?.startTime || ''}
                       onChange={handleTimeChange}
                       required
                       className="block w-full border rounded-md p-2">
@@ -252,6 +309,7 @@ const Booking: React.FC = () => {
                     <select
                       id="endTime"
                       name="endTime"
+                      value={dates?.endTime || ''}
                       onChange={handleTimeChange}
                       required
                       className="block w-full border rounded-md p-2">
@@ -262,11 +320,19 @@ const Booking: React.FC = () => {
                       ))}
                     </select>
                     {timeError && <div className="text-red-500 mt-2">{timeError}</div>}
+                    <input
+                      type="date"
+                      id="end"
+                      name="end"
+                      value={dates?.end}
+                      disabled={true}
+                      className="mt-4 block w-full border rounded-md p-2"
+                    />
                   </div>
                 </>
               ) : (
                 <>
-                  {dates && (
+                  {propertyType !== 'sauna' && dates && (
                     <div className="mt-4 p-4 bg-gray-100 border rounded-md text-center">
                       <p>
                         Время въезда: <span className="font-bold">11:00</span>

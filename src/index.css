@@ -44,7 +44,7 @@
     @apply select-none rounded-full bg-white text-yaring-blue border-yaring-blue border block max-w-fit p-2;
   }
   .orange-button {
-    @apply select-none rounded-full bg-yaring-orange text-white block max-w-fit py-2 px-8;
+    @apply text-center py-1 px-2 sm:py-1 sm:px-4 select-none rounded-full bg-yaring-orange text-white block max-w-fit md:py-2 md:px-4 text-sm md:text-base lg:text-lg;
   }
   .card {
     @apply bg-white text-yaring-blue rounded-2xl p-4 drop-shadow pl-8;
