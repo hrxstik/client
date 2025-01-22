@@ -10,7 +10,7 @@ const CreateBooking: React.FC = () => {
     event.preventDefault();
 
     try {
-      await axios.post('http://localhost:5000/api/bookings', {
+      await axios.post('http://localhost:5000/api/book', {
         property_id: propertyId,
         start_date: startDate,
         end_date: endDate,
