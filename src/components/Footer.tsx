@@ -12,9 +12,9 @@ const Footer = () => {
           <div>
             <Link to="living-rules">Правила проживания</Link>
           </div>
-          <div>
+          {/* <div>
             <Link to="privacy-policy">Политика конфиденциальности</Link>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@demark-pro/react-booking-calendar": "^4.0.3",
     "@pbe/react-yandex-maps": "^1.2.5",
     "@reduxjs/toolkit": "^2.5.0",
     "@types/react": "^19.0.7",

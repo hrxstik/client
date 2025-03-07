@@ -113,14 +113,13 @@ const BookingList: React.FC = () => {
                 </td>
                 <td className="py-2 px-4 border-b">{booking.start_time || '—'}</td>
                 <td className="py-2 px-4 border-b">{booking.end_time || '—'}</td>
-                <td className="py-2 px-4 border-b">{booking.phone}</td>
+                <td className="py-2 px-4 border-b">
+                  <a href={'tel:' + booking.phone}>{booking.phone}</a>
+                </td>
                 <td className="py-2 px-4 border-b">
                   {new Date(booking.created_at).toLocaleString()}
                 </td>
                 <td className="py-2 px-4 border-b">
-                  {/* <button className="bg-yaring-blue text-white rounded px-4 py-1">
-                    Редактировать
-                  </button> */}
                   <button
                     onClick={() => handleDeleteBooking(booking.id)}
                     className="bg-red-500 text-white rounded px-4 mt-1 py-1">
