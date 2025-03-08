@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PricingInfo from '../components/PricingInfo';
 import { CompleteHouseInfo } from '../components/CompleteHouseInfo';
-import HomeButton from '../components/Buttons/HomeButton';
+// import HomeButton from '../components/Buttons/HomeButton';
 import { useLocation } from 'react-router';
 
 const Pricing: React.FC = () => {
@@ -127,7 +127,7 @@ const Pricing: React.FC = () => {
           button={true}
         />
       </div>
-      <HomeButton />
+      {/* <HomeButton /> */}
     </div>
   );
 };

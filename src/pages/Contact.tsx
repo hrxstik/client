@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import YandexMap from '../components/YandexMap';
-import HomeButton from '../components/Buttons/HomeButton';
+// import HomeButton from '../components/Buttons/HomeButton';
 import { ESocialLinks } from '../components/SocialLinks';
 import Telephone from '../components/Buttons/TelephoneButton';
 import { useLocation } from 'react-router';
@@ -13,7 +13,7 @@ const Contact: React.FC = () => {
   }, [location]);
   return (
     <div className="page">
-      <HomeButton />
+      {/* <HomeButton /> */}
       <div className="flex flex-col gap-4">
         <h1>Контакты</h1>
         <a
@@ -46,7 +46,7 @@ const Contact: React.FC = () => {
 
         <h1 className="mt-10">Мы на карте:</h1>
         <YandexMap />
-        <HomeButton />
+        {/* <HomeButton /> */}
       </div>
     </div>
   );
