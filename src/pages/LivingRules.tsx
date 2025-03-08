@@ -1,16 +1,16 @@
 import React from 'react';
-// import HomeButton from '../components/Buttons/HomeButton';
+import HomeButton from '../components/HomeButton';
 
 const LivingRules: React.FC = () => {
   return (
     <div className="page">
-      {/* <HomeButton /> */}
+      <HomeButton />
       <h1>Правила проживания</h1>
       <ul className="">
         <li>Заезд с 14:00</li>
         <li>Выезд до 11:00</li>
       </ul>
-      {/* <HomeButton /> */}
+      <HomeButton />
     </div>
   );
 };

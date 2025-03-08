@@ -1,6 +1,6 @@
 import React from 'react';
 import { useScroll } from './Navigation/ScrollContext';
-import Button from './Buttons/Button';
+import Button from './Button';
 
 const HouseInfo = () => {
   const { refs } = useScroll();
