@@ -22,10 +22,13 @@ const Login: React.FC = () => {
     event.preventDefault();
 
     try {
-      const response = await axios.post<{ token: string }>('http://localhost:5000/api/login', {
-        username,
-        password,
-      });
+      const response = await axios.post<{ token: string }>(
+        `${process.env.REACT_APP_BASE_URL}/api/login`,
+        {
+          username,
+          password,
+        },
+      );
 
       localStorage.setItem('token', response.data.token);
 

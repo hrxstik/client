@@ -16,7 +16,7 @@ const Home: React.FC = () => {
       <Greeting />
       <About />
       <HouseInfo />
-      <Questions />
+      {/* <Questions /> */}
     </div>
   );
 };

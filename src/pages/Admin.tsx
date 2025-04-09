@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BookingList from '../components/Booking/BookingList';
-import CreateBooking from '../components/Booking/CreateBooking';
+import Button from '../components/Button';
 
 const Admin: React.FC = () => {
   const navigate = useNavigate();
@@ -23,8 +23,8 @@ const Admin: React.FC = () => {
   return (
     <div className="page">
       <h1>Администрирование</h1>
+      <Button className="white-button" text="Создать бронь" linkTo="/booking" />
       <BookingList />
-      {false && <CreateBooking />}
       <button onClick={handleLogout} className="white-button">
         Выйти
       </button>

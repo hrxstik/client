@@ -15,7 +15,7 @@ const initialState: ImageState = {
 export const fetchSliderImages = createAsyncThunk<string[], void>(
   'images/fetchSliderImages',
   async () => {
-    const response = await fetch('http://localhost:5000/images/getSliderImages');
+    const response = await fetch(`${process.env.REACT_APP_BASE_URL}/images/getSliderImages`);
     if (!response.ok) {
       const errorMessage = await response.text();
       throw new Error(`Failed to fetch images: ${errorMessage}`);

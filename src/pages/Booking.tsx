@@ -2,109 +2,72 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router';
 import {
   Calendar,
-  CalendarDate,
-  CalendarReserved,
   CalendarSelected,
+  CalendarReserved,
+  CalendarDate,
 } from '@demark-pro/react-booking-calendar';
 import '@demark-pro/react-booking-calendar/dist/react-booking-calendar.css';
 import axios from 'axios';
+import PropertyTypeSelector from '../components/Booking/PropertyTypeSelector';
+import PropertySelector from '../components/Booking/PropertySelector';
+import TimeSelector from '../components/Booking/TimeSelector';
+import PhoneInput from '../components/Booking/PhoneInput';
+import BookingInfo from '../components/Booking/BookingInfo';
+import { createBooking, fetchOccupiedDates } from '../redux/slices/bookingsSlice';
+import { useAppDispatch } from '../redux/store';
+import { validatePhone } from '../utils/validatePhone';
+import { validateTime } from '../utils/validateTime';
 
 const Booking: React.FC = () => {
   const location = useLocation();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location]);
 
   const [propertyType, setPropertyType] = useState('');
-  const [triangularHouses, setTriangularHouses] = useState([1, 2, 3, 4, 5]);
-  const [barnHouses, setBarnHouses] = useState([1, 2]);
-  const [saunas, setSaunas] = useState([1, 2]);
+  const [properties, setProperties] = useState({});
   const [selectedProperty, setSelectedProperty] = useState<number | null>(null);
   const [selectedDates, setSelectedDates] = useState<CalendarSelected[]>([]);
   const [reservedDates, setReservedDates] = useState<CalendarReserved[]>([]);
-  const [startTime, setStartTime] = useState('12:00');
-  const [endTime, setEndTime] = useState('14:00');
-
+  const [startTime, setStartTime] = useState('14:00');
+  const [endTime, setEndTime] = useState('11:00');
   const [phone, setPhone] = useState('');
   const [phoneError, setPhoneError] = useState('');
   const [error, setError] = useState('');
   const [timeError, setTimeError] = useState('');
 
-  const alerts = {
-    200: 'Бронирование успешно!',
-  };
+  const [showBookingInfo, setShowBookingInfo] = useState(false);
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-
-    if (!selectedProperty || selectedDates.length === 0 || !phone) {
-      setError('Пожалуйста, заполните все поля.');
-      return;
-    }
-
-    const dates = selectedDates.map((date) => new Date(date).toISOString());
-
-    try {
-      const response = await axios.post('http://localhost:5000/api/book', {
-        propertyType,
-        propertyId: selectedProperty,
-        dates: {
-          start: dates[0],
-          end: dates[dates.length - 1],
-        },
-        phone,
-        startTime,
-        endTime,
-      });
-
-      alert(alerts[response.status]);
-    } catch (err) {
-      setError('Ошибка при бронировании. Попробуйте ещё раз.');
-    }
-  };
+  const [bookingInfo, setBookingInfo] = useState({
+    propertyName: '',
+    dates: { start: new Date(), end: new Date() },
+    phone: '',
+    startTime: '',
+    endTime: '',
+  });
 
   const handlePropertyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setPropertyType(event.target.value);
     setSelectedProperty(null);
     setSelectedDates([]);
+    setReservedDates([]);
+    setError('');
   };
 
   const handlePropertySelect = (id: number) => {
     setSelectedProperty(id);
-  };
+    setSelectedDates([]);
+    setReservedDates([]);
 
-  const validatePhone = (phone: string) => {
-    const phoneRegex = /^\d{11}$/;
-
-    if (!phoneRegex.test(phone)) {
-      setPhoneError('Номер телефона должен содержать 11 цифр');
-      return false;
+    if (propertyType === 'sauna') {
+      setStartTime('11:00');
+      setEndTime('14:00');
     } else {
-      setPhoneError('');
-      return true;
+      setStartTime('14:00');
+      setEndTime('11:00');
     }
-  };
-
-  useEffect(() => {
-    if (selectedProperty) {
-      axios
-        .get(`http://localhost:5000/api/occupied-dates/${selectedProperty}`)
-        .then((response) => {
-          const dates = response.data.map((d: { start_date: string; end_date: string }) => [
-            new Date(d.start_date),
-            new Date(d.end_date),
-          ]);
-          setReservedDates(dates.flat());
-        })
-        .catch((error) => console.error(error));
-    }
-  }, [selectedProperty]);
-
-  const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setPhone(value);
-    validatePhone(value);
   };
 
   const handleDateChange = (dates: CalendarSelected[]) => {
@@ -121,171 +84,175 @@ const Booking: React.FC = () => {
     validateTime(startTime, event.target.value);
   };
 
-  const validateTime = (start: string, end: string) => {
-    const startHour = parseInt(start.split(':')[0], 10);
-    const endHour = parseInt(end.split(':')[0], 10);
+  const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setPhone(value);
+    const { isValid, error } = validatePhone(value);
+    setPhoneError(error);
+  };
 
-    let duration = endHour - startHour;
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
 
-    if (duration < 0) {
-      duration += 24;
+    if (!selectedProperty || selectedDates.length === 0 || !phone) {
+      setError('Пожалуйста, заполните все поля.');
+      return;
     }
 
-    if (duration < 2) {
-      setTimeError('Минимальная продолжительность бронирования — 2 часа');
-      return false;
-    } else if (duration > 6) {
-      setTimeError('Максимальная продолжительность бронирования — 6 часов');
-      return false;
-    } else {
-      setTimeError('');
-      return true;
+    const dates = selectedDates.map((date) => {
+      const d = new Date(date as CalendarDate);
+      return new Date(
+        Date.UTC(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes()),
+      );
+    });
+
+    let endDate = dates[dates.length - 1];
+
+    if (propertyType === 'sauna') {
+      const timeValidationResult = validateTime(startTime, endTime);
+      if (!timeValidationResult.isValid) {
+        setError(timeValidationResult.error);
+        return;
+      }
+
+      endDate = new Date(dates[0]);
+
+      if (timeValidationResult.nextDay) {
+        endDate.setDate(endDate.getDate() + 1);
+      }
+    }
+
+    try {
+      const resultAction = await dispatch(
+        createBooking({
+          propertyId: selectedProperty,
+          dates: {
+            start: dates[0],
+            end: endDate,
+          },
+          phone,
+          startTime,
+          endTime,
+        }),
+      );
+
+      if (createBooking.fulfilled.match(resultAction)) {
+        const bookingInfoData = {
+          propertyName: properties[propertyType].find((prop) => prop.id === selectedProperty)?.name,
+          dates: {
+            start: dates[0],
+            end: resultAction.payload.endDate,
+          },
+          phone,
+          startTime,
+          endTime,
+        };
+
+        setBookingInfo(bookingInfoData);
+        setShowBookingInfo(true);
+
+        dispatch(fetchOccupiedDates(selectedProperty)).then((action) => {
+          if (fetchOccupiedDates.fulfilled.match(action)) {
+            const reservedDatesArray: CalendarReserved[] = action.payload.map(
+              (dateString: string) => ({
+                startDate: new Date(dateString),
+                endDate: new Date(dateString),
+              }),
+            );
+            setReservedDates(reservedDatesArray);
+          }
+        });
+
+        setSelectedDates([]);
+        setPhone('');
+        setError('');
+      } else {
+        setError(
+          (resultAction.payload as any)?.message || 'Ошибка при бронировании. Попробуйте ещё раз.',
+        );
+      }
+    } catch (err) {
+      setError(err.message);
     }
   };
+
+  useEffect(() => {
+    if (selectedProperty) {
+      dispatch(fetchOccupiedDates(selectedProperty)).then((action) => {
+        if (fetchOccupiedDates.fulfilled.match(action)) {
+          const reservedDatesArray: CalendarReserved[] = action.payload.map(
+            (dateString: string) => ({
+              startDate: new Date(dateString),
+              endDate: new Date(dateString),
+            }),
+          );
+          setReservedDates(reservedDatesArray);
+        }
+      });
+    }
+  }, [selectedProperty]);
+
+  useEffect(() => {
+    const getProperties = async () => {
+      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/get-properties`);
+      setProperties(response.data);
+    };
+
+    getProperties();
+  }, []);
 
   return (
     <div className="max-w-2xl mx-auto p-6 shadow-lg rounded-lg">
       <h1 className="text-2xl font-bold text-center mb-6">Бронирование</h1>
 
       <form onSubmit={handleSubmit}>
-        <label className="block mb-4">
-          <span>Выберите тип недвижимости:</span>
-          <select
-            value={propertyType}
-            onChange={handlePropertyChange}
-            className="mt-1 block w-full border rounded-md p-2">
-            <option value="">Выберите</option>
-            <option value="triangular">Треугольный дом</option>
-            <option value="barn">Барн дом</option>
-            <option value="sauna">Баня</option>
-          </select>
-        </label>
+        <PropertyTypeSelector propertyType={propertyType} onChange={handlePropertyChange} />
 
-        {propertyType === 'triangular' && (
-          <div className="mb-4">
-            <h2 className="text-lg font-semibold mb-2">Треугольные дома</h2>
-            {triangularHouses.map((house) => (
-              <div key={house} className="flex items-center mb-2">
-                <input
-                  type="radio"
-                  id={`triangular-${house}`}
-                  name="house"
-                  value={house}
-                  onChange={() => handlePropertySelect(house)}
-                  className="mr-2"
-                />
-                <label htmlFor={`triangular-${house}`}>Дом {house}</label>
-              </div>
-            ))}
-          </div>
-        )}
+        <PropertySelector
+          propertyType={propertyType}
+          properties={properties[propertyType] || []}
+          onSelect={handlePropertySelect}
+        />
 
-        {propertyType === 'barn' && (
-          <div className="mb-4">
-            <h2 className="text-lg font-semibold mb-2">Барн дома</h2>
-            {barnHouses.map((house) => (
-              <div key={house} className="flex items-center mb-2">
-                <input
-                  type="radio"
-                  id={`barn-${house}`}
-                  name="house"
-                  value={house}
-                  onChange={() => handlePropertySelect(house)}
-                  className="mr-2"
-                />
-                <label htmlFor={`barn-${house}`}>Дом {house}</label>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {propertyType === 'sauna' && (
-          <div className="mb-4">
-            <h2 className="text-lg font-semibold mb-2">Бани</h2>
-            {saunas.map((sauna) => (
-              <div key={sauna} className="flex items-center mb-2">
-                <input
-                  type="radio"
-                  id={`sauna-${sauna}`}
-                  name="sauna"
-                  value={sauna}
-                  onChange={() => handlePropertySelect(sauna)}
-                  className="mr-2"
-                />
-                <label htmlFor={`sauna-${sauna}`}>Баня {sauna}</label>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {selectedProperty && (
+        {propertyType && selectedProperty && (
           <div className="mb-4">
             <label className="block">
               <span>Выберите дат{propertyType === 'sauna' ? 'у' : 'ы'}:</span>
-              <Calendar
-                onChange={handleDateChange}
-                reserved={reservedDates}
-                range={propertyType !== 'sauna'}
-                selected={selectedDates}
-                protection={true}
-              />
             </label>
+            <Calendar
+              onChange={handleDateChange}
+              reserved={reservedDates}
+              range={propertyType !== 'sauna'}
+              selected={selectedDates}
+              protection={true}
+            />
           </div>
         )}
-
         {propertyType === 'sauna' && selectedDates.length > 0 && (
-          <div className="mb-4">
-            <h2 className="text-lg font-semibold mb-2">Выберите время:</h2>
-            <div className="flex flex-col">
-              <label htmlFor="startTime">Забронировать с</label>
-              <select
-                id="startTime"
-                name="startTime"
-                value={startTime}
-                onChange={handleStartTimeChange}
-                required
-                className="block w-full border rounded-md p-2">
-                {[...Array(24)].map((_, hour) => (
-                  <option key={hour} value={`${hour}:00`}>
-                    {hour}:00
-                  </option>
-                ))}
-              </select>
-
-              <label htmlFor="endTime" className="mt-4">
-                Забронировать до
-              </label>
-              <select
-                id="endTime"
-                name="endTime"
-                value={endTime}
-                onChange={handleEndTimeChange}
-                required
-                className="block w-full border rounded-md p-2">
-                {[...Array(24)].map((_, hour) => (
-                  <option key={hour} value={`${hour}:00`}>
-                    {hour}:00
-                  </option>
-                ))}
-              </select>
-              {timeError && <div className="text-red-500 mt-2">{timeError}</div>}
-            </div>
-          </div>
+          <TimeSelector
+            startTime={startTime}
+            endTime={endTime}
+            timeError={timeError}
+            onStartTimeChange={handleStartTimeChange}
+            onEndTimeChange={handleEndTimeChange}
+          />
         )}
 
-        <label className="block mb-4">
-          <span>Номер телефона:</span>
-          <input
-            type="tel"
-            value={phone}
-            onChange={handlePhoneChange}
-            required
-            className="mt-1 block w-full border rounded-md p-2"
-          />
-        </label>
+        <PhoneInput phone={phone} phoneError={phoneError} onChange={handlePhoneChange} />
 
-        {phoneError && <p className="text-red-500">{phoneError}</p>}
+        {showBookingInfo && (
+          <BookingInfo
+            propertyName={bookingInfo.propertyName}
+            dates={bookingInfo.dates}
+            phone={bookingInfo.phone}
+            startTime={bookingInfo.startTime}
+            endTime={bookingInfo.endTime}
+            onClose={() => setShowBookingInfo(false)}
+          />
+        )}
+
         {error && <p className="text-red-500 mb-4">{error}</p>}
+        {timeError && <p className="text-red-500 mb-4">{timeError}</p>}
 
         <button
           type="submit"
