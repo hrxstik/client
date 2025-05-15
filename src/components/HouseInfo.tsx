@@ -7,7 +7,7 @@ const HouseInfo = () => {
   return (
     <div
       ref={refs.houseInfo}
-      className="pt-4 bg-cover bg-centers aspect-[5/1] grid grid-cols-1 md:grid-cols-2"
+      className="relative pt-4 bg-cover bg-center grid grid-cols-1 md:grid-cols-2"
       id="houseInfo">
       <section className="pl-0 pt-4 md:pl-4">
         <h2 className="md:text-3xl font-bold mb-4">Домики</h2>
