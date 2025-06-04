@@ -2,7 +2,7 @@ import React from 'react';
 import { FaPhone } from 'react-icons/fa';
 
 const Telephone = () => {
-  const phoneNumber = '+7 (977) 576-76-09';
+  const phoneNumber = '+7 (901) 066-11-11';
   const [isMobile, setIsMobile] = React.useState(window.innerWidth < 768);
 
   const handleResize = () => {
