@@ -31,8 +31,8 @@ const Navigation = () => {
         <span className="cursor-pointer">Домики</span>
       </Link>
       <Link to="pricing">Цены</Link>
-      <Link to="/#activities">Активности</Link>
-      <Link to="/#questions">Частые вопросы</Link>
+      {/* <Link to="/#activities">Активности</Link>
+      <Link to="/#questions">Частые вопросы</Link> */}
       <Link to="contact">Контакты</Link>
       <div className="flex items-center gap-4">
         <SocialLinks />
