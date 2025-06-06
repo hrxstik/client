@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import axiosInstance from '../../utils/axiosInstance';
 
 export const fetchBookings = createAsyncThunk(
   'bookings/fetchBookings',
   async (propertyType?: string) => {
-    const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/getBookings`, {
+    const response = await axiosInstance.get('/api/getBookings', {
       params: { propertyType },
     });
     return response.data;
@@ -12,7 +12,7 @@ export const fetchBookings = createAsyncThunk(
 );
 
 export const deleteBooking = createAsyncThunk('bookings/deleteBooking', async (id: number) => {
-  await axios.delete(`${process.env.REACT_APP_BASE_URL}/api/bookings/${id}`);
+  await axiosInstance.delete(`/api/bookings/${id}`);
   return id;
 });
 
@@ -29,26 +29,24 @@ export const createBooking = createAsyncThunk(
     { rejectWithValue },
   ) => {
     try {
-      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/api/book`, {
+      const response = await axiosInstance.post('/api/book', {
         propertyId,
         dates,
         phone,
         startTime,
         endTime,
       });
-
       return response.data;
     } catch (err: any) {
       return rejectWithValue(err.response.data);
     }
   },
 );
-
 export const fetchOccupiedDates = createAsyncThunk(
   'bookings/fetchOccupiedDates',
   async (propertyId: number, { rejectWithValue }) => {
     try {
-      const response = await axios.get(
+      const response = await axiosInstance.get(
         `${process.env.REACT_APP_BASE_URL}/api/occupied-dates/${propertyId}`,
       );
       return response.data;
