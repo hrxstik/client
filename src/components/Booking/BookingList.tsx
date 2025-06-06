@@ -54,7 +54,7 @@ const BookingList = () => {
               <th className="py-2 px-4 border-b">Время начала</th>
               <th className="py-2 px-4 border-b">Время окончания</th>
               <th className="py-2 px-4 border-b">Телефон</th>
-              <th className="py-2 px-4 border-b">Дата создания</th>
+              <th className="py-2 px-4 border-b">Дата создания (МСК)</th>
               <th className="py-2 px-4 border-b">Действия</th>
             </tr>
           </thead>
@@ -81,7 +81,11 @@ const BookingList = () => {
                   <td className="py-2 px-4 border-b">
                     <a href={'tel:' + booking.phone}>{booking.phone}</a>
                   </td>
-                  <td className="py-2 px-4 border-b">{createdAt.toLocaleString('ru-RU')}</td>
+                  <td className="py-2 px-4 border-b">
+                    {new Date(booking.created_at).toLocaleString('ru-RU', {
+                      timeZone: 'Europe/Moscow',
+                    })}{' '}
+                  </td>
                   <td className="py-2 px-4 border-b">
                     <button
                       onClick={() => handleDeleteBooking(booking.id)}
